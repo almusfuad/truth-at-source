@@ -22,6 +22,6 @@ class SimpleJWTAuthentication(BaseAuthentication):
         except jwt.InvalidTokenError:
             raise AuthenticationFailed('Invalid token')
         
-        user = User.objects.filter(user_id=payload['user_id'])
+        user = User.objects.get(user_id=payload['user_id'])
         return (user, None)
     
