@@ -37,7 +37,7 @@ class EvidenceCreateView(APIView):
 
         return Response({
             "evidenceId": e.id,
-            "versionId": v.id
+            "versionId": v.version_id
         }, status=201)
 
 
@@ -82,7 +82,7 @@ class EvidenceVersionCreateView(APIView):
 
 
         return Response({
-            "versionId": v.id
+            "versionId": v.version_id
         }, status=201)
 
 
