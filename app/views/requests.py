@@ -45,13 +45,23 @@ class FactoryRequestListView(APIView):
 
     def get(self, request):
         qs = Request.objects.filter(
-            factory_id=request.user.facctory_id,
+            factory_id=request.user.factory_id,
         )
 
         return Response([
             {
                 "id": r.id,
-                "title": r.title
+                "factoryId": r.factory_id,
+                "title": r.title,
+                "items": [
+                    {
+                        "id": item.id,
+                        "docType": item.doc_type,
+                        "fulfilled": item.fulfilled_evidence is not None,
+                        "fulfilledEvidence": item.fulfilled_evidence_id,
+                        "fulfilledVersion": item.fulfilled_version_id
+                    } for item in r.items.all()
+                ]
             } for r in qs
         ])
 

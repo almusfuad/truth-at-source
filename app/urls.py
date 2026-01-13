@@ -20,8 +20,8 @@ urlpatterns = [
          EvidenceVersionCreateView.as_view(), 
          name='create_evidence_version'),
     path('requests/', RequestCreateView.as_view(), name='create_request'),
-    path('requests/factory', FactoryRequestListView.as_view(), name='factory_requests'),
-    path('requests/fulfill', FulfillItemView.as_view(), name='fulfill_item'),
-    path('audit/logs', AuditListView.as_view(), name='audit_logs'),
+    path('requests/factory/', FactoryRequestListView.as_view(), name='factory_requests'),
+    path('requests/<int:request_id>/items/<int:item_id>/fulfill/', FulfillItemView.as_view(), name='fulfill_item'),
+    path('audit/logs/', AuditListView.as_view(), name='audit_logs'),
 ]
 
