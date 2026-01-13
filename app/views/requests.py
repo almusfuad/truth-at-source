@@ -66,6 +66,38 @@ class FactoryRequestListView(APIView):
         ])
 
 
+class BuyerRequestListView(APIView):
+    permission_classes = [IsAuthenticated, IsBuyer]
+
+
+    def get(self, request):
+        qs = Request.objects.filter(
+            created_by=request.user,
+        )
+
+        return Response([
+            {
+                "id": r.id,
+                "factoryId": r.factory_id,
+                "title": r.title,
+                "status": "completed" if all(item.fulfilled_evidence for item in r.items.all()) else "pending",
+                "items": [
+                    {
+                        "id": item.id,
+                        "docType": item.doc_type,
+                        "fulfilled": item.fulfilled_evidence is not None,
+                        "fulfilledEvidence": {
+                            "id": item.fulfilled_evidence.id,
+                            "name": item.fulfilled_evidence.name,
+                            "docType": item.fulfilled_evidence.doc_type,
+                            "version": item.fulfilled_version.version_id
+                        } if item.fulfilled_evidence else None
+                    } for item in r.items.all()
+                ]
+            } for r in qs
+        ])
+
+
 
 class FulfillItemView(APIView):
     permission_classes = [IsAuthenticated, IsFactory]
