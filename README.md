@@ -408,8 +408,13 @@ curl --location 'http://localhost:8000/api/requests/' \
 }'
 
 
-### Request List
+### Request List (Factory)
 curl --location 'http://localhost:8000/api/requests/factory/' \
+--header 'Authorization: Bearer <token>'
+
+
+### Request List (Buyer)
+curl --location 'http://localhost:8000/api/requests/buyer/' \
 --header 'Authorization: Bearer <token>'
 
 
